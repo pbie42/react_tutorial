@@ -3,17 +3,39 @@ var ReactDOM = require('react-dom')
 var createReactClass = require('create-react-class')
 
 var TodoComponent = createReactClass({
+	getInitialState: function () {
+		return {
+			todos: [ 'wash up', 'eat some cheese', 'take a nap' ]
+		}
+	},
 	render: function () {
+		let todos = this.state.todos
+		todos = todos.map((item, index) => {
+			return (
+				<TodoItem item={ item } key={ index } />
+			)
+		})
 		return (
-			<div>
-				<p><strong>Cheese Name: </strong>{ this.props.cheese.name }</p>
-				<p><strong>Smell Factor: </strong>{ this.props.cheese.smellFactor }</p>
-				<p><strong>Price: </strong>{ this.props.cheese.price }</p>
+			<div id="todo-list">
+				<p>The busiest people have the most leisure...</p>
+				<ul>
+					{ todos }
+				</ul>
 			</div>
 		)
 	}
 })
 
-var myCheese = { name: 'Camembert', smellFactor: 'Extreme Pong', price: '3.50' }
+var TodoItem = createReactClass({
+	render: function () {
+		return (
+			<li>
+				<div className="todo-item">
+					<span className="item-name">{ this.props.item }</span>
+				</div>
+			</li>
+		)
+	}
+})
 
-ReactDOM.render(<TodoComponent msg="I like cheese" cheese={ myCheese }/>, document.getElementById('todo-wrapper'))
+ReactDOM.render(<TodoComponent />, document.getElementById('todo-wrapper'))
